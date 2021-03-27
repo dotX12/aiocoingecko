@@ -1,11 +1,12 @@
 import asyncio
 from dataclasses import dataclass
-from typing import Optional, List
+from typing import Optional, List, Union
 from methods import *
-
+from logs import *
 from aiohttp import ClientSession
 from REST.decorators import get
 from REST.async_base import AsyncClient
+from enums import *
 
 
 class RealClient(AsyncClient):
@@ -54,8 +55,9 @@ class RealClient(AsyncClient):
 
     @get(Coins.MARKETS)
     async def get_coins_markets(self, ids: str, vs_currency: str = 'usd', category: str = '',
-                                order: str = 'market_cap_desc', per_page: int = 100, page: int = 1,
-                                sparkline: bool = False, price_change_percentage: str = '1h,24h,7d') -> dict:
+                                order: Union[MarketSortOrder, str] = MarketSortOrder.MARKET_CAP_DESC,
+                                per_page: int = 100, page: int = 1, sparkline: bool = False,
+                                price_change_percentage: str = '1h,24h,7d') -> list:
 
         """
         List all supported coins price, market cap, volume, and market related data
@@ -86,7 +88,7 @@ class RealClient(AsyncClient):
                                     exchange_ids: str = '',
                                     include_exchange_logo: bool = False,
                                     page: int = 1,
-                                    order: str = 'trust_score_desc',
+                                    order: Union[SortOrder, str] = SortOrder.TRUST_SCORE_DESC,
                                     depth: bool = True) -> dict:
         """
         Get coin tickers (paginated to 100 items)
@@ -105,10 +107,39 @@ class RealClient(AsyncClient):
         Get historical data (name, price, market, stats) at a given date for a coin
         """
 
+    @get(Coins.MARKET_CHART)
+    async def get_coin_market_chart_by_id(self,
+                                          id: str, vs_currency: str = 'usd', days: str = '7',
+                                          interval: Union[Interval, str] = Interval.DAILY) -> dict:
+        """
+        Get historical market data include price, market cap, and 24h volume (granularity auto)
+        Minutely data will be used for duration within 1 day, Hourly data will be used for duration between 1 day and 90 days,
+        Daily data will be used for duration above 90 days.
+
+        :param id: pass the coin id (can be obtained from /coins) eg. bitcoin
+        :param vs_currency: The target currency of market data (usd, eur, jpy, etc.)
+        :param days: Data up to number of days ago (eg. 1,14,30,max)
+        :param interval: Data interval. Possible value: daily
+        """
+
+    @get(Coins.MARKET_CHART_RANGE)
+    async def get_coin_market_chart_range_by_id(self, id: str, from_timestamp: int,
+                                                to_timestamp: int, vs_currency: str = 'usd') -> dict:
+        """
+        Get historical market data include price, market cap, and 24h volume within a range of timestamp (granularity auto)
+        Minutely data will be used for duration within 1 day, Hourly data will be used for duration between 1 day and
+        90 days, Daily data will be used for duration above 90 days.
+
+        :param from_timestamp: From date in UNIX Timestamp (eg. 1392577232)
+        :param to_timestamp: To date in UNIX Timestamp (eg. 1422577232)
+        :param id: pass the coin id (can be obtained from /coins) eg. bitcoin
+        :param vs_currency: The target currency of market data (usd, eur, jpy, etc.)
+
+        """
 
 async def main():
     client = RealClient()
-    resp = await client.get_coin_history_by_id(id='bitcoin', date='27-03-2021')
+    resp = await client.get_coin_market_chart_range_by_id(id='bitcoin', from_timestamp=1392577232, to_timestamp=1422577232)
     print(resp)
     await client.session.close()
 
