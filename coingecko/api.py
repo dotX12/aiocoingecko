@@ -55,12 +55,11 @@ class CoinGeckoAPI(AsyncClient):
 
     @get(SimpleURL.SUPPORTED_VS_CURRENCIES)
     async def get_supported_vs_currencies(self) -> dict:
-
         """
         Get list of supported_vs_currencies.
         """
 
-    @get(Coins.LIST)
+    @get(CoinsURL.LIST)
     async def get_coins_list(self, include_platform: bool = True) -> dict:
         """
         List all supported coins id, name and symbol (no pagination required)
@@ -70,7 +69,7 @@ class CoinGeckoAPI(AsyncClient):
             valid values: true, false
         """
 
-    @get(Coins.MARKETS)
+    @get(CoinsURL.MARKETS)
     async def get_coins_markets(self, ids: str, vs_currency: str = 'usd', category: str = '',
                                 order: Union[MarketSortOrder, str] = MarketSortOrder.MARKET_CAP_DESC,
                                 per_page: int = 100, page: int = 1, sparkline: bool = False,
@@ -92,7 +91,7 @@ class CoinGeckoAPI(AsyncClient):
             (eg. '1h,24h,7d' comma-separated, invalid values will be discarded)
         """
 
-    @get(Coins.COIN_DATA)
+    @get(CoinsURL.COIN_DATA)
     async def get_coin_by_id(self,
                              id: str,
                              localization: bool = True,
@@ -118,7 +117,7 @@ class CoinGeckoAPI(AsyncClient):
         :param sparkline: Include sparkline 7 days data (eg. true, false) [default: false]
         """
 
-    @get(Coins.COIN_TICKERS)
+    @get(CoinsURL.COIN_TICKERS)
     async def get_coin_ticker_by_id(self,
                                     id: str,
                                     exchange_ids: str = '',
@@ -141,7 +140,7 @@ class CoinGeckoAPI(AsyncClient):
         :param depth: flag to show 2% orderbook depth. valid values: true, false
         """
 
-    @get(Coins.HISTORICAL_DATA)
+    @get(CoinsURL.HISTORICAL_DATA)
     async def get_coin_history_by_id(self,
                                      id: str,
                                      date: str,
@@ -153,7 +152,7 @@ class CoinGeckoAPI(AsyncClient):
         :param localization: Set to false to exclude localized languages in response
         """
 
-    @get(Coins.MARKET_CHART)
+    @get(CoinsURL.MARKET_CHART)
     async def get_coin_market_chart_by_id(self,
                                           id: str, vs_currency: str = 'usd', days: str = '7',
                                           interval: Union[Interval, str] = Interval.DAILY) -> dict:
@@ -168,7 +167,7 @@ class CoinGeckoAPI(AsyncClient):
         :param interval: Data interval. Possible value: daily
         """
 
-    @get(Coins.MARKET_CHART_RANGE)
+    @get(CoinsURL.MARKET_CHART_RANGE)
     async def get_coin_market_chart_range_by_id(self, id: str, from_timestamp: int,
                                                 to_timestamp: int, vs_currency: str = 'usd') -> dict:
         """
@@ -183,7 +182,7 @@ class CoinGeckoAPI(AsyncClient):
 
         """
 
-    @get(Coins.STATUS_UPDATE)
+    @get(CoinsURL.STATUS_UPDATE)
     async def get_coin_status_updates_by_id(self, id: str, per_page: int = 100, page: int = 1) -> dict:
         """
         Get status updates for a given coin
@@ -192,8 +191,8 @@ class CoinGeckoAPI(AsyncClient):
         :param page: Page through results
         """
 
-    @get(Coins.OHLC)
-    async def get_coin_ohlc_by_id(self, id: str, vs_currency: str = 'usd', days: str = '7'):
+    @get(CoinsURL.OHLC)
+    async def get_coin_ohlc_by_id(self, id: str, vs_currency: str = 'usd', days: str = '7') -> dict:
         """
         Get coin's OHLC (Beta)
         Candle’s body:
@@ -206,10 +205,78 @@ class CoinGeckoAPI(AsyncClient):
         :param days: Data up to number of days ago (1/7/14/30/90/180/365/max)
         """
 
+    @get(ContractURL.COIN_INFO)
+    async def get_coin_info_from_contract_address_by_id(self, contract_address: str, id: str = 'ethereum') -> dict:
+        """
+        Get coin info from contract address
+        :param id: Asset platform (only ethereum is supported at this moment)
+        :param contract_address: Token’s contract address
+        """
+
+    @get(ContractURL.HISTORICAL_DATA)
+    async def get_coin_market_chart_from_contract_address_by_id(self, contract_address: str, id: str = 'ethereum',
+                                                                vs_currency: str = 'usd', days: str = '1d') -> dict:
+        """
+        Get historical market data include price, market cap, and 24h volume (granularity auto) from a contract address
+
+        :param id: The id of the platform issuing tokens (Only ethereum is supported for now)
+        :param contract_address: Token’s contract address
+        :param vs_currency: The target currency of market data (usd, eur, jpy, etc.)
+        :param days: Data up to number of days ago (eg. 1,14,30,max)
+        """
+
+    @get(ContractURL.HISTORICAL_DATA_RANGE)
+    async def get_coin_market_chart_range_from_contract_address_by_id(self, contract_address: str,
+                                                                      from_timestamp: int,
+                                                                      to_timestamp: int,
+                                                                      id: str = 'ethereum',
+                                                                      vs_currency: str = 'usd') -> dict:
+        """
+        Get historical market data include price, market cap, and 24h volume within a range of timestamp
+        (granularity auto) from a contract address
+
+        :param contract_address: Token’s contract address
+        :param from_timestamp: From date in UNIX Timestamp (eg. 1392577232)
+        :param to_timestamp: To date in UNIX Timestamp (eg. 1422577232)
+        :param id: The id of the platform issuing tokens (Only ethereum is supported for now)
+        :param vs_currency: The target currency of market data (usd, eur, jpy, etc.)
+        """
+
+    @get(ExchangesURL.LIST_ALL_EXCHANGES)
+    async def get_exchanges_list(self, per_page: int = 100, page: int = 1) -> Union[List[dict]]:
+        """
+        List all exchanges
+        :param per_page: Valid values: 1…250 Total results per page Default value:: 100
+        :param page: page through results
+        """
+
+    @get(ExchangesURL.LIST_ALL_SUPPORTED_MARKETS)
+    async def get_exchanges_id_name_list(self) -> Union[List[dict]]:
+        """
+        List all supported markets id and name (no pagination required)
+        Use this to obtain all the markets’ id in order to make API calls
+        """
+
+    @get(ExchangesURL.EXCHANGE_VOLUME)
+    async def get_exchanges_by_id(self, id: str):
+        """
+        Get exchange volume in BTC and top 100 tickers only
+        Get exchange volume in BTC and tickers
+
+        IMPORTANT:
+        Ticker object is limited to 100 items, to get more tickers, use /exchanges/{id}/tickers
+        Ticker is_stale is true when ticker that has not been updated/unchanged from the exchange for a while.
+        Ticker is_anomaly is true if ticker’s price is outliered by our system.
+        You are responsible for managing how you want to display these information (
+            e.g. footnote, different background, change opacity, hide)
+
+        :param id: pass the exchange id (can be obtained from /exchanges/list) eg. binance
+        """
+
 
 async def main():
-    client = RealClient()
-    resp = await client.get_coins_markets(id='ethereum', days='6')
+    client = CoinGeckoAPI()
+    resp = await client.get_exchanges_by_id(id='binance')
     print(resp)
     await client.session.close()
 
