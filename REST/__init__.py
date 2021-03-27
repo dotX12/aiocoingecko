@@ -9,4 +9,5 @@ __all__ = [
     "delete",
     "ApiError",
     "NotFoundError",
+    "reformat",
 ]
