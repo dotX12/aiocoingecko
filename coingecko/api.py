@@ -9,7 +9,7 @@ from REST.async_base import AsyncClient
 from enums import *
 
 
-class RealClient(AsyncClient):
+class CoinGeckoAPI(AsyncClient):
     def __init__(self):
         super().__init__(BaseURL.BASE, ClientSession())
 
@@ -23,19 +23,34 @@ class RealClient(AsyncClient):
     async def get_price(self, ids: str, vs_currencies: str = 'usd',
                         include_market_cap: bool = False, include_24hr_vol: bool = False,
                         include_24hr_change: bool = False, include_last_updated_at: bool = False) -> dict:
-
         """
         Get the current price of any cryptocurrencies in any other supported currencies that you need.
+
+        :param ids: id of coins, comma-separated if querying more than 1 coin *refers to coins/list
+        :param vs_currencies: vs_currency of coins, comma-separated if querying more than 1 vs_currency
+            *refers to simple/supported_vs_currencies
+        :param include_market_cap: true/false to include market_cap, default: false
+        :param include_24hr_vol: true/false to include 24hr_vol, default: false
+        :param include_24hr_change: true/false to include 24hr_change, default: false
+        :param include_last_updated_at: true/false to include last_updated_at of price, default: false
         """
 
     @get(SimpleURL.TOKEN_PRICE)
     async def get_token_price(self, contract_addresses: str, id: str = 'ethereum', vs_currencies: str = 'usd',
                               include_market_cap: bool = False, include_24hr_vol: bool = False,
                               include_24hr_change: bool = False, include_last_updated_at: bool = False) -> dict:
-
         """
         Get current price of tokens (using contract addresses)
         for a given platform in any other currency that you need.
+
+        :param contract_addresses: The contract address of tokens, comma separated
+        :param id: The id of the platform issuing tokens (Only ethereum is supported for now)
+        :param vs_currencies: vs_currency of coins, comma-separated if querying more than 1 vs_currency
+            *refers to simple/supported_vs_currencies
+        :param include_market_cap: true/false to include market_cap, default: false
+        :param include_24hr_vol: true/false to include 24hr_vol, default: false
+        :param include_24hr_change: true/false to include 24hr_change, default: false
+        :param include_last_updated_at: true/false to include last_updated_at of price, default: false
         """
 
     @get(SimpleURL.SUPPORTED_VS_CURRENCIES)
@@ -47,10 +62,12 @@ class RealClient(AsyncClient):
 
     @get(Coins.LIST)
     async def get_coins_list(self, include_platform: bool = True) -> dict:
-
         """
         List all supported coins id, name and symbol (no pagination required)
         Use this to obtain all the coins’ id in order to make API calls
+
+        :param include_platform: flag to include platform contract addresses (eg. 0x… for Ethereum based tokens).
+            valid values: true, false
         """
 
     @get(Coins.MARKETS)
@@ -58,10 +75,21 @@ class RealClient(AsyncClient):
                                 order: Union[MarketSortOrder, str] = MarketSortOrder.MARKET_CAP_DESC,
                                 per_page: int = 100, page: int = 1, sparkline: bool = False,
                                 price_change_percentage: str = '1h,24h,7d') -> list:
-
         """
         List all supported coins price, market cap, volume, and market related data
         Use this to obtain all the coins market data (price, market cap, volume)
+
+        :param ids: The target currency of market data (usd, eur, jpy, etc.)
+        :param vs_currency: The ids of the coin, comma separated crytocurrency symbols (base). refers to /coins/list.
+            When left empty, returns numbers the coins observing the params limit and start
+        :param category: filter by coin category, only decentralized_finance_defi is supported at the moment
+        :param order: valid values: market_cap_desc, gecko_desc, gecko_asc, market_cap_asc, market_cap_desc,
+            volume_asc, volume_desc, id_asc, id_desc sort results by field.
+        :param per_page: valid values: 1…250 Total results per page
+        :param page: Page through results
+        :param sparkline: Include sparkline 7 days data (eg. true, false)
+        :param price_change_percentage: Include price change percentage in 1h, 24h, 7d, 14d, 30d, 200d, 1y
+            (eg. '1h,24h,7d' comma-separated, invalid values will be discarded)
         """
 
     @get(Coins.COIN_DATA)
@@ -80,6 +108,14 @@ class RealClient(AsyncClient):
         Ticker is_stale is true when ticker that has not been updated/unchanged from the exchange for a while.
         Ticker is_anomaly is true if ticker’s price is outliered by our system.
         You are responsible for managing how you want to display these information (e.g. footnote, different background, change opacity, hide)
+
+        :param id: pass the coin id (can be obtained from /coins) eg. bitcoin
+        :param localization: Include all localized languages in response (true/false) [default: true]
+        :param tickers: Include tickers data (true/false) [default: true]
+        :param market_data: Include market_data (true/false) [default: true]
+        :param community_data: Include community_data data (true/false) [default: true]
+        :param developer_data: Include developer_data data (true/false) [default: true]
+        :param sparkline: Include sparkline 7 days data (eg. true, false) [default: false]
         """
 
     @get(Coins.COIN_TICKERS)
@@ -96,6 +132,13 @@ class RealClient(AsyncClient):
         Ticker is_stale is true when ticker that has not been updated/unchanged from the exchange for a while.
         Ticker is_anomaly is true if ticker’s price is outliered by our system.
         You are responsible for managing how you want to display these information (e.g. footnote, different background, change opacity, hide)
+
+        :param id: pass the coin id (can be obtained from /coins/list) eg. bitcoin
+        :param exchange_ids: filter results by exchange_ids (ref: v3/exchanges/list)
+        :param include_exchange_logo: lag to show exchange_logo
+        :param page: Page through results
+        :param order: valid values: trust_score_desc (default), trust_score_asc and volume_desc
+        :param depth: flag to show 2% orderbook depth. valid values: true, false
         """
 
     @get(Coins.HISTORICAL_DATA)
@@ -105,6 +148,9 @@ class RealClient(AsyncClient):
                                      localization: str = 'en') -> dict:
         """
         Get historical data (name, price, market, stats) at a given date for a coin
+        :param id: pass the coin id (can be obtained from /coins) eg. bitcoin
+        :param date: The date of data snapshot in dd-mm-yyyy eg. 30-12-2017
+        :param localization: Set to false to exclude localized languages in response
         """
 
     @get(Coins.MARKET_CHART)
@@ -137,9 +183,33 @@ class RealClient(AsyncClient):
 
         """
 
+    @get(Coins.STATUS_UPDATE)
+    async def get_coin_status_updates_by_id(self, id: str, per_page: int = 100, page: int = 1) -> dict:
+        """
+        Get status updates for a given coin
+        :param id: pass the coin id (can be obtained from /coins) eg. bitcoin
+        :param per_page: Total results per page
+        :param page: Page through results
+        """
+
+    @get(Coins.OHLC)
+    async def get_coin_ohlc_by_id(self, id: str, vs_currency: str = 'usd', days: str = '7'):
+        """
+        Get coin's OHLC (Beta)
+        Candle’s body:
+        1 - 2 days: 30 minutes
+        3 - 30 days: 4 hours
+        31 and before: 4 days
+
+        :param id: pass the coin id (can be obtained from /coins/list) eg. bitcoin
+        :param vs_currency: The target currency of market data (usd, eur, jpy, etc.)
+        :param days: Data up to number of days ago (1/7/14/30/90/180/365/max)
+        """
+
+
 async def main():
     client = RealClient()
-    resp = await client.get_coin_market_chart_range_by_id(id='bitcoin', from_timestamp=1392577232, to_timestamp=1422577232)
+    resp = await client.get_coins_markets(id='ethereum', days='6')
     print(resp)
     await client.session.close()
 
