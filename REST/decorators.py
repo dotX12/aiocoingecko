@@ -1,6 +1,9 @@
+import json
 from functools import wraps
 from inspect import getcallargs, iscoroutinefunction
 from typing import cast
+
+from .reformat import ChangeKeys
 
 try:
     from .async_base import AsyncClient
@@ -23,9 +26,12 @@ def rest(url_format: str, *, method: str, body_name: str):
             params = getcallargs(func, self, *args, **kwargs)
             url = url_format.format(**params)
             body = params.get(body_name)
+
             serialized_params = self.args_factory.dump(params, func.args_class)
+            reformat_params = ChangeKeys(serialized_params).reformat()
+
             return self.request(url=url, method=method,
-                                body=body, params=serialized_params,
+                                body=body, params=reformat_params,
                                 body_class=body_class, result_class=result_class)
 
         if iscoroutinefunction(func) and has_async:
