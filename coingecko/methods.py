@@ -1,15 +1,15 @@
 
 class BaseURL:
-    BASE: str = "https://api.coingecko.com/api/v3/{method}"
+    BASE: str = "https://api.coingecko.com/api/v3/"
 
 
-class Ping:
+class PingURL:
     """
     GET /ping Check API server status"""
     PING: str = "ping"
 
 
-class Simple:
+class SimpleURL:
     """
     GET /simple/price Get the current price of any cryptocurrencies in any other supported currencies that you need.
     GET /simple/token_price/{id} Get current price of tokens (using contract addresses) for a given platform in any
@@ -155,3 +155,5 @@ class Global:
     """
     CRYPTOCURRENCY_GLOBAL_DATA: str = "/global"
     CRYPTOCURRENCY_GLOBAL_DATA_DEFI: str = "/global/decentralized_finance_defi"
+
+
