@@ -20,7 +20,7 @@ class SimpleURL:
     SUPPORTED_VS_CURRENCIES: str = "simple/supported_vs_currencies"
 
 
-class Coins:
+class CoinsURL:
     """
     GET /coins/list List all supported coins id, name and symbol (no pagination required)
     GET /coins/markets List all supported coins price, market cap, volume, and market related data
@@ -44,7 +44,7 @@ class Coins:
     OHLC: str = "/coins/{id}/ohlc"
 
 
-class Contract:
+class ContractURL:
     """
     GET /coins/{id}/contract/{contract_address} Get coin info from contract address
 
@@ -54,12 +54,12 @@ class Contract:
     GET /coins/{id}/contract/{contract_address}/market_chart/range Get historical market data include price, market cap,
      and 24h volume within a range of timestamp (granularity auto) from a contract address
  """
-    COIN_INFO: str = "/coins/{id}/contract/{contract_address}"
-    HISTORICAL_DATA: str = "/coins/{id}/contract/{contract_address}/market_chart/"
+    COIN_INFO: str = "coins/{id}/contract/{contract_address}"
+    HISTORICAL_DATA: str = "coins/{id}/contract/{contract_address}/market_chart/"
     HISTORICAL_DATA_RANGE: str = "/coins/{id}/contract/{contract_address}/market_chart/range"
 
 
-class Exchanges:
+class ExchangesURL:
     """
     Beta
     GET /exchanges List all exchanges
@@ -69,15 +69,15 @@ class Exchanges:
     GET /exchanges/{id}/status_updates Get status updates for a given exchange (beta)
     GET /exchanges/{id}/volume_chart Get volume_chart data for a given exchange (beta)
     """
-    LIST_ALL_EXCHANGES: str = "/exchanges"
-    LIST_ALL_SUPPORTED_MARKETS: str = "/exchanges/list"
-    EXCHANGE_VOLUME: str = "/exchanges/{id}"
-    EXCHANGE_TICKERS: str = "/exchanges/{id}/tickers"
-    STATUS_UPDATES: str = "/exchanges/{id}/status_updates"
-    VOLUME_CHART: str = "/exchanges/{id}/volume_chart"
+    LIST_ALL_EXCHANGES: str = "exchanges"
+    LIST_ALL_SUPPORTED_MARKETS: str = "exchanges/list"
+    EXCHANGE_VOLUME: str = "exchanges/{id}"
+    EXCHANGE_TICKERS: str = "exchanges/{id}/tickers"
+    STATUS_UPDATES: str = "exchanges/{id}/status_updates"
+    VOLUME_CHART: str = "exchanges/{id}/volume_chart"
 
 
-class Finance:
+class FinanceURL:
     """
     Beta
     GET /finance_platforms List all finance platforms
@@ -87,7 +87,7 @@ class Finance:
     FINANCE_PRODUCTS: str = "/finance_products"
 
 
-class Indexes:
+class IndexesURL:
     """
     Beta
     GET /indexes List all market indexes
@@ -101,7 +101,7 @@ class Indexes:
     MARKET_INDEX_BY_ID_AND_INDEX: str = "/indexes/list_by_market_and_id/{market_id}/{id}"
 
 
-class Derivatives:
+class DerivativesURL:
     """
     Beta
     GET /derivatives List all derivative tickers
@@ -115,7 +115,7 @@ class Derivatives:
     DERIVATIVE_EXCHANGES_NAME_IDENTIFIER: str = "/derivatives/exchanges/list"
 
 
-class StatusUpdates:
+class StatusUpdatesURL:
     """
     Beta
     GET /status_updates List all status_updates with data (description, category, created_at, user, user_title and pin)
@@ -123,7 +123,7 @@ class StatusUpdates:
     STATUS_UPDATES_WITH_DATA: str = "/status_updates"
 
 
-class Events:
+class EventsURL:
     """
     GET /events Get events, paginated by 100
     GET /events/countries Get list of event countries
@@ -134,21 +134,21 @@ class Events:
     EVENTS_TYPES: str = "/events/types"
 
 
-class ExchangesRates:
+class ExchangesRatesURL:
     """
     GET /exchange_rates Get BTC-to-Currency exchange rates
     """
     EXCHANGE_RATES: str = "/exchange_rates"
 
 
-class Trending:
+class TrendingURL:
     """
     GET /search/trending Get trending search coins (Top-7) on CoinGecko in the last 24 hours
     """
     TRENDING_SEARCH_COINS: str = "/search/trending"
 
 
-class Global:
+class GlobalURL:
     """
     GET /global Get cryptocurrency global data
     GET /global/decentralized_finance_defi Get cryptocurrency global decentralized finance(defi) data
