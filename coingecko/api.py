@@ -268,15 +268,98 @@ class CoinGeckoAPI(AsyncClient):
         Ticker is_stale is true when ticker that has not been updated/unchanged from the exchange for a while.
         Ticker is_anomaly is true if ticker’s price is outliered by our system.
         You are responsible for managing how you want to display these information (
-            e.g. footnote, different background, change opacity, hide)
+        e.g. footnote, different background, change opacity, hide)
 
         :param id: pass the exchange id (can be obtained from /exchanges/list) eg. binance
         """
 
+    @get(ExchangesURL.EXCHANGE_TICKERS)
+    async def get_exchanges_tickers_by_id(self, id: str, coin_ids: str, include_exchange_logo: bool = True,
+                                          page: int = 1, depth: bool = True,
+                                          order: Union[SortOrder, str] = SortOrder.TRUST_SCORE_DESC) -> dict:
+        """
+        Get exchange tickers (paginated, 100 tickers per page)
+        IMPORTANT:
+        Ticker is_stale is true when ticker that has not been updated/unchanged from the exchange for a while.
+        Ticker is_anomaly is true if ticker’s price is outliered by our system.
+        You are responsible for managing how you want to display these information (e.g. footnote, different background,
+        change opacity, hide)
+
+        :param id: pass the exchange id (can be obtained from /exchanges/list) eg. binance
+        :param coin_ids: filter tickers by coin_ids (ref: v3/coins/list)
+        :param include_exchange_logo: flag to show exchange_logo
+        :param page: Page through results
+        :param depth: flag to show 2% orderbook depth i.e., cost_to_move_up_usd and cost_to_move_down_usd
+        :param order: valid values: trust_score_desc (default), trust_score_asc and volume_desc
+        """
+
+    @get(ExchangesURL.STATUS_UPDATES)
+    async def get_exchanges_status_updates_by_id(self, id: str, per_page: int = 50, page: int = 1) -> dict:
+        """
+        Get status updates for a given exchange (beta)
+
+        :param id: pass the exchange id (can be obtained from /exchanges/list) eg. binance
+        :param per_page: Total results per page
+        :param page: Page through results
+        """
+
+    @get(ExchangesURL.VOLUME_CHART)
+    async def get_exchanges_volume_chart_by_id(self, id: str, days: int = 14) -> list:
+        """
+        Get volume_chart data for a given exchange (beta)
+
+        :param id: pass the exchange id (can be obtained from /exchanges/list) eg. binance
+        :param days: Data up to number of days ago (eg. 1,14,30)
+        """
+
+    @get(FinanceURL.FINANCE_PLATFORMS)
+    async def get_finance_platforms(self, per_page: int = 100, page: int = 1) -> list:
+        """
+        List all finance platforms
+        :param per_page: Total results per page
+        :param page: page of results (paginated to 100 by default)
+        """
+
+    @get(FinanceURL.FINANCE_PRODUCTS)
+    async def get_finance_products(self, per_page: int = 100, page: int = 1) -> list:
+        """
+        List all finance products
+
+        :param per_page: Total results per page
+        :param page: page of results (paginated to 100 by default)
+        # :param start_at: start date of the financial products  | NOT USABLE IN API
+        # :param end_at: end date of the financial products | NOT USABLE IN API
+        """
+
+    @get(IndexesURL.ALL_MARKET_INDEXES)
+    async def get_indexes(self, per_page: int = 100, page: int = 1) -> list:
+        """
+        List all market indexes
+
+        :param per_page: Total results per page
+        :param page: Page through results
+        """
+
+    @get(IndexesURL.MARKET_INDEX)
+    async def get_indexes_by_id(self, market_id: str, id: str) -> list:
+        """
+        Get market index by market id and index id
+
+        :param market_id: pass the market id (can be obtained from /exchanges/list)
+        :param id: pass the index id (can be obtained from /indexes/list)
+        """
+        
+    @get(IndexesURL.LIST_MARKET_INDEXES_ID_AND_NAME)
+    async def get_indexes_list(self) -> list:
+        """
+        List market indexes id and name
+        """
+
+
 
 async def main():
     client = CoinGeckoAPI()
-    resp = await client.get_exchanges_by_id(id='binance')
+    resp = await client.get_indexes_list()
     print(resp)
     await client.session.close()
 
