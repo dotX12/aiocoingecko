@@ -83,8 +83,8 @@ class FinanceURL:
     GET /finance_platforms List all finance platforms
     GET /finance_products List all finance products
     """
-    FINANCE_PLATFORMS: str = "/finance_platforms"
-    FINANCE_PRODUCTS: str = "/finance_products"
+    FINANCE_PLATFORMS: str = "finance_platforms"
+    FINANCE_PRODUCTS: str = "finance_products"
 
 
 class IndexesURL:
@@ -95,10 +95,10 @@ class IndexesURL:
     GET /indexes/list list market indexes id and name
     GET /indexes/list_by_market_and_id/{market_id}/{id} get market index by market id and market index id
     """
-    ALL_MARKET_INDEXES: str = "/indexes"
-    MARKET_INDEX: str = "/indexes/{market_id}/{id}"
-    LIST_MARKET_INDEXES_ID_AND_NAME: str = "/indexes/list"
-    MARKET_INDEX_BY_ID_AND_INDEX: str = "/indexes/list_by_market_and_id/{market_id}/{id}"
+    ALL_MARKET_INDEXES: str = "indexes"
+    MARKET_INDEX: str = "indexes/{market_id}/{id}"
+    LIST_MARKET_INDEXES_ID_AND_NAME: str = "indexes/list"
+    MARKET_INDEX_BY_ID_AND_INDEX: str = "indexes/list_by_market_and_id/{market_id}/{id}"
 
 
 class DerivativesURL:
