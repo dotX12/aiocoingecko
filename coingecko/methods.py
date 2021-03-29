@@ -33,15 +33,15 @@ class CoinsURL:
     GET /coins/{id}/status_updatesGet status updates for a given coin (beta)
     GET /coins/{id}/ohlc Get coin's OHLC (Beta)
     """
-    LIST: str = "/coins/list"
-    MARKETS: str = "/coins/markets"
+    LIST: str = "coins/list"
+    MARKETS: str = "coins/markets"
     COIN_DATA: str = "coins/{id}"
-    COIN_TICKERS: str = "/coins/{id}/tickers"
-    HISTORICAL_DATA: str = "/coins/{id}/history"
-    MARKET_CHART: str = "/coins/{id}/market_chart"
-    MARKET_CHART_RANGE: str = "/coins/{id}/market_chart/range"
-    STATUS_UPDATE: str = "/coins/{id}/status_updates"
-    OHLC: str = "/coins/{id}/ohlc"
+    COIN_TICKERS: str = "coins/{id}/tickers"
+    HISTORICAL_DATA: str = "coins/{id}/history"
+    MARKET_CHART: str = "coins/{id}/market_chart"
+    MARKET_CHART_RANGE: str = "coins/{id}/market_chart/range"
+    STATUS_UPDATE: str = "coins/{id}/status_updates"
+    OHLC: str = "coins/{id}/ohlc"
 
 
 class ContractURL:
@@ -56,7 +56,7 @@ class ContractURL:
  """
     COIN_INFO: str = "coins/{id}/contract/{contract_address}"
     HISTORICAL_DATA: str = "coins/{id}/contract/{contract_address}/market_chart/"
-    HISTORICAL_DATA_RANGE: str = "/coins/{id}/contract/{contract_address}/market_chart/range"
+    HISTORICAL_DATA_RANGE: str = "coins/{id}/contract/{contract_address}/market_chart/range"
 
 
 class ExchangesURL:
@@ -96,7 +96,6 @@ class IndexesURL:
     GET /indexes/list_by_market_and_id/{market_id}/{id} get market index by market id and market index id
     """
     ALL_MARKET_INDEXES: str = "indexes"
-    MARKET_INDEX: str = "indexes/{market_id}/{id}"
     LIST_MARKET_INDEXES_ID_AND_NAME: str = "indexes/list"
     MARKET_INDEX_BY_ID_AND_INDEX: str = "indexes/list_by_market_and_id/{market_id}/{id}"
 
@@ -109,10 +108,10 @@ class DerivativesURL:
     GET /derivatives/exchanges/{id} show derivative exchange data
     GET /derivatives/exchanges/list List all derivative exchanges name and identifier
     """
-    DERIVATIVES_TICKERS: str = "/derivatives"
-    DERIVATIVES_EXCHANGES: str = "/derivatives/exchanges"
-    DERIVATIVE_EXCHANGE_DATA: str = "/derivatives/exchanges/{id}"
-    DERIVATIVE_EXCHANGES_NAME_IDENTIFIER: str = "/derivatives/exchanges/list"
+    DERIVATIVES_TICKERS: str = "derivatives"
+    DERIVATIVES_EXCHANGES: str = "derivatives/exchanges"
+    DERIVATIVE_EXCHANGE_DATA: str = "derivatives/exchanges/{id}"
+    DERIVATIVE_EXCHANGES_NAME_IDENTIFIER: str = "derivatives/exchanges/list"
 
 
 class StatusUpdatesURL:
@@ -120,7 +119,7 @@ class StatusUpdatesURL:
     Beta
     GET /status_updates List all status_updates with data (description, category, created_at, user, user_title and pin)
     """
-    STATUS_UPDATES_WITH_DATA: str = "/status_updates"
+    STATUS_UPDATES_WITH_DATA: str = "status_updates"
 
 
 class EventsURL:
@@ -129,23 +128,23 @@ class EventsURL:
     GET /events/countries Get list of event countries
     GET /events/types Get list of events types
     """
-    EVENTS: str = "/events"
-    EVENTS_COUNTIES: str = "/events/countries"
-    EVENTS_TYPES: str = "/events/types"
+    EVENTS: str = "events"
+    EVENTS_COUNTIES: str = "events/countries"
+    EVENTS_TYPES: str = "events/types"
 
 
 class ExchangesRatesURL:
     """
     GET /exchange_rates Get BTC-to-Currency exchange rates
     """
-    EXCHANGE_RATES: str = "/exchange_rates"
+    EXCHANGE_RATES: str = "exchange_rates"
 
 
 class TrendingURL:
     """
     GET /search/trending Get trending search coins (Top-7) on CoinGecko in the last 24 hours
     """
-    TRENDING_SEARCH_COINS: str = "/search/trending"
+    TRENDING_SEARCH_COINS: str = "search/trending"
 
 
 class GlobalURL:
@@ -153,7 +152,7 @@ class GlobalURL:
     GET /global Get cryptocurrency global data
     GET /global/decentralized_finance_defi Get cryptocurrency global decentralized finance(defi) data
     """
-    CRYPTOCURRENCY_GLOBAL_DATA: str = "/global"
-    CRYPTOCURRENCY_GLOBAL_DATA_DEFI: str = "/global/decentralized_finance_defi"
+    CRYPTOCURRENCY_GLOBAL_DATA: str = "global"
+    CRYPTOCURRENCY_GLOBAL_DATA_DEFI: str = "global/decentralized_finance_defi"
 
 
