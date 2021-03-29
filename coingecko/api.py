@@ -1,9 +1,10 @@
 from typing import List, Union
-from methods import *
+from .methods import BaseURL, PingURL, CoinsURL, SimpleURL, ContractURL, IndexesURL, ExchangesURL, FinanceURL, DerivativesURL,\
+    StatusUpdatesURL, EventsURL, ExchangesRatesURL, TrendingURL, GlobalURL
 from aiohttp import ClientSession
 from REST.decorators import get
 from REST.async_base import AsyncClient
-from enums import Interval, MarketSortOrder, SortOrder, IncludeTickers, ProjectType, StatusCategory, EventTypes
+from .enums import Interval, MarketSortOrder, SortOrder, IncludeTickers, ProjectType, StatusCategory, EventTypes
 
 
 class CoinGeckoAPI(AsyncClient):
@@ -51,13 +52,13 @@ class CoinGeckoAPI(AsyncClient):
         """
 
     @get(SimpleURL.SUPPORTED_VS_CURRENCIES)
-    async def get_supported_vs_currencies(self) -> dict:
+    async def get_supported_vs_currencies(self) -> list:
         """
         Get list of supported_vs_currencies.
         """
 
     @get(CoinsURL.LIST)
-    async def get_coins_list(self, include_platform: bool = True) -> dict:
+    async def get_coins_list(self, include_platform: bool = True) -> list:
         """
         List all supported coins id, name and symbol (no pagination required)
         Use this to obtain all the coins’ id in order to make API calls
