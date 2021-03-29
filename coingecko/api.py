@@ -1,12 +1,9 @@
-import asyncio
-from dataclasses import dataclass
-from typing import Optional, List, Union
+from typing import List, Union
 from methods import *
-from logs import *
 from aiohttp import ClientSession
 from REST.decorators import get
 from REST.async_base import AsyncClient
-from enums import *
+from enums import Interval, MarketSortOrder, SortOrder, IncludeTickers, ProjectType, StatusCategory, EventTypes
 
 
 class CoinGeckoAPI(AsyncClient):
@@ -340,7 +337,7 @@ class CoinGeckoAPI(AsyncClient):
         :param page: Page through results
         """
 
-    @get(IndexesURL.MARKET_INDEX)
+    @get(IndexesURL.MARKET_INDEX_BY_ID_AND_INDEX)
     async def get_indexes_by_id(self, market_id: str, id: str) -> list:
         """
         Get market index by market id and index id
@@ -348,21 +345,108 @@ class CoinGeckoAPI(AsyncClient):
         :param market_id: pass the market id (can be obtained from /exchanges/list)
         :param id: pass the index id (can be obtained from /indexes/list)
         """
-        
+
     @get(IndexesURL.LIST_MARKET_INDEXES_ID_AND_NAME)
     async def get_indexes_list(self) -> list:
         """
         List market indexes id and name
         """
 
+    @get(DerivativesURL.DERIVATIVES_TICKERS)
+    async def get_derivatives(self, include_tickers: Union[IncludeTickers, str] = IncludeTickers.UNEXPIRED):
+        """
+        List all derivative tickers
+        ['all’, ‘unexpired’] - expired to show unexpired tickers, all to list all tickers, defaults to unexpired
+        """
 
+    @get(DerivativesURL.DERIVATIVES_EXCHANGES)
+    async def get_derivatives_exchanges(self, order: Union[MarketSortOrder, str] = MarketSortOrder.MARKET_CAP_DESC,
+                                        per_page: int = 100, page: int = 1) -> list:
+        """
+        :param order: order results using following params name_asc，name_desc，open_interest_btc_asc，
+            open_interest_btc_desc，trade_volume_24h_btc_asc，trade_volume_24h_btc_desc
+        :param per_page: Total results per page
+        :param page: Page through results
+        """
 
-async def main():
-    client = CoinGeckoAPI()
-    resp = await client.get_indexes_list()
-    print(resp)
-    await client.session.close()
+    @get(DerivativesURL.DERIVATIVE_EXCHANGE_DATA)
+    async def get_derivatives_exchanges_by_id(self, id: str, include_tickers:
+                                              Union[IncludeTickers, str] = IncludeTickers.UNEXPIRED) -> list:
+        """
+        Show derivative exchange data
+        
+        :param id: pass the exchange id (can be obtained from derivatives/exchanges/list) eg. bitmex
+        :param include_tickers: ['all’, ‘unexpired’] - expired to show unexpired tickers, all to list all tickers,
+            leave blank to omit tickers data in response
+        """
 
+    @get(DerivativesURL.DERIVATIVE_EXCHANGES_NAME_IDENTIFIER)
+    async def get_derivatives_exchanges_list(self) -> list:
+        """
+        List all derivative exchanges name and identifier
+        """
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(main())
+    @get(StatusUpdatesURL.STATUS_UPDATES_WITH_DATA)
+    async def get_status_updates(self, category: Union[StatusCategory, str] = StatusCategory.GENERAL,
+                                 project_type: Union[ProjectType, str] = ProjectType.COIN,
+                                 per_page: int = 100, page: int = 1) -> list:
+        """
+
+        :param category: Filtered by category (eg. general, milestone, partnership, exchange_listing,
+            software_release, fund_movement, new_listings, event)
+        :param project_type: Filtered by Project Type (eg. coin, market). If left empty returns both
+            status from coins and markets.
+        :param per_page: Total results per page
+        :param page: Page through results
+        """
+
+    @get(EventsURL.EVENTS)
+    async def get_events(self, country_code: str, from_date, to_date, type: Union[EventTypes, str],
+                         upcoming_events_only: bool = True, page: int = 1):
+        """
+        Get events, paginated by 100
+
+        :param country_code: country_code of event (eg. ‘US’). use /api/v3/events/countries for list of country_codes
+        :param type: type of event (eg. ‘Conference’). use /api/v3/events/types for list of types
+        :param page: page of results (paginated by 100)
+        :param upcoming_events_only: lists only upcoming events.
+            true, false (defaults to true, set to false to list all events)
+        :param from_date:
+        :param to_date:
+        """
+
+    @get(EventsURL.EVENTS_COUNTIES)
+    async def get_events_countries(self):
+        """
+        Get list of event countries
+        """
+
+    @get(EventsURL.EVENTS_TYPES)
+    async def get_events_types(self):
+        """
+        Get list of event types
+        """
+
+    @get(ExchangesRatesURL.EXCHANGE_RATES)
+    async def get_exchange_rates(self):
+        """
+        Get BTC-to-Currency exchange rates
+        """
+
+    @get(TrendingURL.TRENDING_SEARCH_COINS)
+    async def get_search_trending(self):
+        """
+        Top-7 trending coins on CoinGecko as searched by users in the last 24 hours (Ordered by most popular first)
+        """
+
+    @get(GlobalURL.CRYPTOCURRENCY_GLOBAL_DATA)
+    async def get_global(self):
+        """
+        Get cryptocurrency global data
+        """
+
+    @get(GlobalURL.CRYPTOCURRENCY_GLOBAL_DATA_DEFI)
+    async def get_global_decentralized_finance_defi(self):
+        """
+        Get Top 100 Cryptocurrency Global Eecentralized Finance(defi) data
+        """
