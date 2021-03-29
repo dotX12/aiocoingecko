@@ -56,6 +56,9 @@ class AsyncClient(BaseClient[ClientSession]):
             )
             raise ApiError("Cannot decode response") from error
 
+    async def close(self) -> None:
+        await self.session.close()
+
 
 __all__ = [
     "AsyncClient"
