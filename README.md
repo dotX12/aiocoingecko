@@ -57,7 +57,6 @@ https://www.coingecko.com/api/docs/v3
 ```python 
 cg.ping()
 ```
-
 </details> 	
 
 
@@ -78,6 +77,97 @@ cg.get_token_price()
 ```python 
 cg.get_supported_vs_currencies()
 ```
-
 </details> 	
 
+<details> 
+<summary>
+<b>coins<b>
+</summary><br>
+
+**/coins/list** (List all supported coins id, name and symbol (no pagination required))
+```python
+cg.get_coins_list()
+```
+**/coins/markets** (List all supported coins price, market cap, volume, and market related data)
+```python
+cg.get_coins_markets()
+```
+**/coins/{id}** (Get current data (name, price, market, ... including exchange tickers) for a coin)
+```python
+cg.get_coin_by_id()
+```
+**/coins/{id}/tickers** (Get coin tickers (paginated to 100 items))
+```python
+cg.get_coin_ticker_by_id()
+```
+**/coins/{id}/history** (Get historical data (name, price, market, stats) at a given date for a coin)
+```python
+cg.get_coin_history_by_id()
+```
+**/coins/{id}/market_chart** (Get historical market data include price, market cap, and 24h volume (granularity auto))
+```python
+cg.get_coin_market_chart_by_id()
+```
+**/coins/{id}/market_chart/range** (Get historical market data include price, market cap, and 24h volume within a range of timestamp (granularity auto))
+```python
+cg.get_coin_market_chart_range_by_id()
+```
+**/coins/{id}/status_updates** (Get status updates for a given coin (beta))
+```python
+cg.get_coin_status_updates_by_id()
+```
+**/coins/{id}/ohlc** (Get coin's OHLC (beta))
+```python
+cg.get_coin_ohlc_by_id()
+```
+</details> 
+
+<details> 
+<summary>
+<b>contract<b>
+</summary><br>
+
+**/coins/{id}/contract/{contract_address}** (Get coin info from contract address)
+```python
+cg.get_coin_info_from_contract_address_by_id()
+```
+**/coins/{id}/contract/{contract_address}/market_chart/** (Get historical market data include price, market cap, and 24h volume (granularity auto) from a contract address)
+```python
+cg.get_coin_market_chart_from_contract_address_by_id()
+```
+**/coins/{id}/contract/{contract_address}/market_chart/range** (Get historical market data include price, market cap, and 24h volume within a range of timestamp (granularity auto) from a contract address)
+```python
+cg.get_coin_market_chart_range_from_contract_address_by_id()
+```
+</details> 	
+
+<details> 
+<summary>
+<b>exchanges (beta)<b>
+</summary><br>
+
+**/exchanges** (List all exchanges)
+```python
+cg.get_exchanges_list()
+```
+**/exchanges/list** (List all supported markets id and name (no pagination required))
+```python
+cg.get_exchanges_id_name_list()
+```
+**/exchanges/{id}** (Get exchange volume in BTC and top 100 tickers only)
+```python
+cg.get_exchanges_by_id()
+```
+**/exchanges/{id}/tickers** (Get exchange tickers (paginated, 100 tickers per page))
+```python
+cg.get_exchanges_tickers_by_id()
+```
+**/exchanges/{id}/status_updates** (Get status updates for a given exchange (beta))
+```python
+cg.get_exchanges_status_updates_by_id()
+```
+**/exchanges/{id}/volume_chart** (Get volume_chart data for a given exchange (beta))
+```python
+cg.get_exchanges_volume_chart_by_id()
+```
+</details> 	
