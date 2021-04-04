@@ -171,3 +171,21 @@ cg.get_exchanges_status_updates_by_id()
 cg.get_exchanges_volume_chart_by_id()
 ```
 </details> 	
+
+<details> 
+<summary>
+<b>finance (beta)<b>
+</summary><br>
+
+**/finance_platforms** (List all finance platforms)
+```python
+cg.get_finance_platforms()
+```
+**/finance_products** (List all finance products)
+ ```python
+ cg.get_finance_products()
+```
+</details> 	
+
+
+
