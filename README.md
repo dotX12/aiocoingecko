@@ -188,4 +188,21 @@ cg.get_finance_platforms()
 </details> 	
 
 
+<details> 
+<summary>
+<b>indexes (beta)<b>
+</summary><br>
 
+**/indexes** (List all market indexes)
+```python
+cg.get_indexes()
+```
+**/indexes/{id}** (Get market index by id)
+```python
+cg.get_indexes_by_id()
+```
+**/indexes/list** (List market indexes id and name)
+```python
+cg.get_indexes_list()
+```
+</details> 	
