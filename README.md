@@ -206,3 +206,26 @@ cg.get_indexes_by_id()
 cg.get_indexes_list()
 ```
 </details> 	
+
+<details> 
+<summary>
+<b>derivatives<b>
+</summary><br>
+
+**/derivatives** (List all derivative tickers)
+```python
+cg.get_derivatives()
+```
+**/derivatives/exchanges** (List all derivative exchanges)
+```python
+cg.get_derivatives_exchanges()
+```
+**/derivatives/exchanges/{id}** (Show derivative exchange data)
+```python
+cg.get_derivatives_exchanges_by_id()
+```
+**/derivatives/exchanges/list** (List all derivative exchanges name and identifier)
+```python
+cg.get_derivatives_exchanges_list()
+```
+</details>
