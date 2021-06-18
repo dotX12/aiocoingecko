@@ -229,3 +229,89 @@ cg.get_derivatives_exchanges_by_id()
 cg.get_derivatives_exchanges_list()
 ```
 </details>
+
+<details> 
+<summary>
+<b>status_updates<b>
+</summary><br>
+
+**/status_updates** (List all status_updates with data (description, category, created_at, user, user_title and pin))
+```python
+cg.get_status_updates()
+```
+</details>
+
+<details> 
+<summary>
+<b>events<b>
+</summary><br>
+
+**/events** (Get events, paginated by 100)
+```python
+cg.get_events()
+```
+**/events/countries** (Get list of event countries)
+```python
+cg.get_events_countries()
+```
+**/events/types** (Get list of events types)
+```python
+cg.get_events_types()
+```
+</details>
+
+<details> 
+<summary>
+<b>exchange_rates<b>
+</summary><br>
+
+**/exchange_rates** (Get BTC-to-Currency exchange rates)
+```python
+cg.get_exchange_rates()
+```
+</details>
+
+<details> 
+<summary>
+<b>trending<b>
+</summary><br>
+
+**/search/trending** (Get trending search coins (Top-7) on CoinGecko in the last 24 hours)
+```python
+cg.get_search_trending()
+```
+</details>
+
+<details> 
+<summary>
+<b>global<b>
+</summary><br>
+
+**/global** (Get cryptocurrency global data)
+```python
+cg.get_global()
+```
+
+**/global/decentralized_finance_defi** (Get cryptocurrency global decentralized finance(defi) data)
+```python
+cg.get_global_decentralized_finance_defi()
+```
+
+</details>
+
+
+<details> 
+<summary>
+<b>companies (beta)<b>
+</summary><br>
+
+**/companies/public_treasury/{coin_id}** (Get public companies data)
+```python
+cg.get_companies_public_treasury_by_coin_id()
+```
+
+</details>
+
+
+
+
